@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src * filesystem: data: gap: http://www.google-analytics.com http://www.googletagmanager.com http://ssl.gstatic.com http://csvjson.s3.amazonaws.com http://csvjson.s3.us-east-2.amazonaws.com 'unsafe-eval' 'unsafe-inline'; media-src *; img-src * data:">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<link href="/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>CSV to JSON - CSVJSON</title>
+		<meta name="description" content="Online tool for converting CSV to JSON. Convert Excel to JSON. Transpose data. Output array or hash.">
+
+		<script type="text/javascript">
+			window.APP = {
+				page: "csv2json",
+				run: true,
+				version: 0.302,
+				id: null,
+				data: null,
+				data_url: null			};
+		</script>
+
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js" type="text/javascript"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" type="text/javascript"></script>
+		<link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" charset="utf-8" />
+		<link href="/js/3rd/jQuery-File-Upload/css/jquery.fileupload.css" rel="stylesheet" type="text/css" charset="utf-8" />
+
+		
+								<link href="/css/csvjson.css?v=0.302" rel="stylesheet" type="text/css" charset="utf-8" />
+									<script src="/js/3rd.min.js?v=0.302" type="text/javascript"></script>
+									<script src="/js/csvjson.min.js?v=0.302" type="text/javascript"></script>
+									<script src="/js/app.min.js?v=0.302" type="text/javascript"></script>
+			
+		<script>
+			!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
+				analytics.load("mVmXAtABgYVqPdbXw1a4Y19vcesa1cec");
+				analytics.page();
+			}}();
+
+			analytics.ready(function(){
+				var flatfileLinks = $('a[href*="flatfile.io"]');
+
+				flatfileLinks.each(function(){
+					var bareURL = $(this).attr('href')
+					$(this).attr('href', bareURL + '&ajs_event=came_from_csvjson&ajs_prop_ccf_id=' + window.analytics.user().anonymousId())
+				})
+
+				analytics.trackLink(flatfileLinks, 'Clicked Flatfile Link');
+			})
+	</script>
+	</head>
+	<body>
+		<header class="navbar" role="banner">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/" title="csvjson.com - Online Conversion Tools, sponsored by Flatfile">
+						<img src="/img/logo-sponsor-flatfile.svg" alt="> CSVJSON sponsored by Flatfile" />
+					</a>
+					<ul class="nav navbar-nav navbar-left">
+													<li class="active">
+								<a href="/csv2json">CSV to JSON</a>
+							</li>
+												<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tools <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="/csv2json">CSV to JSON</a></li>
+								<li><a href="/json2csv">JSON to CSV</a></li>
+								<li><a href="/json_beautifier">JSON Beautifier</a></li>
+								<li><a href="/json_validator">JSON Validator</a></li>
+								<li><a href="/sql2json">SQL to JSON</a></li>
+								<li><a href="/csvjson2json">CSVJSON to JSON</a></li>
+								<li><a href="/datajanitor">Data Janitor <sup>BETA</sup></a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right flatfile-banner">
+						<li>
+							<a href="https://try.flatfile.io/csv-importer-for-web-apps?utm_source=CSVJSON-Sponsorship-November-2019&utm_medium=Banner-Promo&utm_campaign=CSVJSON-Sponsorship-Q4-2019-Converter-Page-Top-Banner&utm_term=Converter-Page-Top-Right-Banner&utm_content=CSV-Importer"
+								title="The seamless way to import, clean, & consolidate customer data">
+								<span class="image-wrapper">
+									<img src="/img/flatfile-logomark.svg" alt="Flatfile logo" />
+								</span>
+								<span class="text">
+									<span class="text-row">
+										<strong>CSV Importer</strong> • <span class="secondary">Install in minutes</span>
+									</span>
+									<span class="text-row">
+										Works with React, Angular, Vue and more...
+									</span>
+								<span>
+							</a>
+						</li>
+					</ul>
+											<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="#" class="save-permalink" title="Save a permanent link to share with a colleague."><i class="glyphicon glyphicon-link"></i> Save</a>
+							</li>
+						</ul>
+									</div>
+			</div>
+		</header>
+
+		<div class="container-fluid">
+	<div class="row">
+		<div class="description col-md-12">
+			<h1 class="discrete">Online tool to convert your CSV or TSV formatted data to JSON.</h1>
+			<p>1) Copy/paste or upload your Excel data (CSV or TSV) to convert it to JSON. 2) Set up options: parse numbers, transpose your data, or output an object instead of an array. 3) Convert and copy/paste back to your computer. 4) Save your result for later or for sharing.</p>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-5 more-bottom-margin">
+			<div class="form-group">
+				<label>Upload a CSV file</label>
+				<span class="btn btn-default fileinput-button form-control">
+					<label>
+						<i class="glyphicon glyphicon-plus"></i>
+						<span>Select a file...</span>
+					</label>
+					<input id="fileupload" type="file" name="file" />
+				</span>
+			</div>
+			<div class="form-group code-group">
+				<label>Or paste your CSV here</label>
+<textarea id="csv" class="form-control input save" rows="18" spellcheck="false">
+album, year, US_peak_chart_post
+The White Stripes, 1999, -
+De Stijl, 2000, -
+White Blood Cells, 2001, 61
+Elephant, 2003, 6
+Get Behind Me Satan, 2005, 3
+Icky Thump, 2007, 2
+Under Great White Northern Lights, 2010, 11
+Live in Mississippi, 2011, -
+Live at the Gold Dollar, 2012, -
+Nine Miles from the White City, 2013, -
+</textarea>
+			</div>
+			<button id="convert" type="submit" class="btn btn-primary">
+				<i class="glyphicon glyphicon-chevron-right"></i> Convert
+			</button>
+			<button id="clear" type="submit" class="btn">
+				<i class="glyphicon glyphicon-remove"></i> Clear
+			</button>
+		</div>
+		
+		<div class="col-md-7 more-bottom-margin">
+			<div class="form-group">
+				<label>Options <small>Hover on option for help</small></label>
+				<div class="form-control options">
+					<label class="inline save" title="Choose your separator">
+						Separator
+						<select id="separator" name="separator">
+							<option value="auto" selected="selected">Auto-detect</option>
+							<option value="comma">Comma</option>
+							<option value="semiColon">Semi-colon</option>
+							<option value="tab">Tab</option>
+						</select>
+					</label>
+					&nbsp;
+					<label class="inline" title="Check to parse numbers (i.e. '7e2' would become 700). Uncheck to keep original formatted numbers as strings.">
+						<input type="checkbox" id="parseNumbers" name="parseNumbers" class="save" checked="checked "/> Parse numbers
+					</label>
+					&nbsp;
+					<label class="inline" title="Check to parse potential values as JSON (numbers, null, false, true, [] and {}). Uncheck to keep original values as strings.">
+						<input type="checkbox" id="parseJSON" name="parseJSON" class="save" checked="checked "/> Parse JSON
+					</label>
+					&nbsp;
+					<label class="inline" title="Transpose the data beforehand.">
+						<input type="checkbox" id="transpose" name="transpose" class="save" /> Transpose
+					</label>
+					&nbsp;
+					<label class="inline">Output:</label>
+					<label class="radio-inline" title="Output an array of objects."><input type="radio" id="output-array" name="output" class="save" value="array" checked="checked" />Array</label>
+					<label class="radio-inline"  title="Output an object instead of an array. First column is used as hash key."><input type="radio" id="output-hash" name="output" class="save" value="hash" />Hash</label>
+					&nbsp;
+					<label class="inline" title="Minify or compact result by removing spaces and new lines.">
+						<input type="checkbox" id="minify" name="minify" class="save" /> Minify
+					</label>
+				</div>
+			</div>
+			<div class="form-group code-group">
+  <label>JSON</label> <span class="result-note"></span>
+  <textarea id="result" class="form-control result save" rows="18" spellcheck="false"></textarea>
+</div>
+<a id="download" class="btn btn-primary" href="" download="csvjson.json" disabled="disabled" target="_self">
+  <i class="glyphicon glyphicon-download"></i> Download
+</a>
+<a id="copy" class="btn btn-primary" href="#" title="or Ctrl + A then Ctrl + C to copy to clipboard."><i class="glyphicon glyphicon-share"></i> Copy</a>
+<a class="convert" href="#" title="Convert"><i class="glyphicon glyphicon-chevron-right"></i></a>
+<a class="clear" href="#" title="Clear"><i class="glyphicon glyphicon-remove"></i></a>
+<br/>
+<a id="issue" class="btn btn-default" href="#" tabindex="0" role="button" data-toggle="popover" title= "Found an issue? Want an improvement?">Bug or suggestion?</a>		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8">
+			<h4>Node.js</h4>
+			<p>
+				This function is available as a <a href="https://www.npmjs.com/package/csvjson-csv2json" target="_blank">npm package</a>.
+			</p>
+
+			<h4>Uploading multiple CSVs?</h4>
+			<p>
+				Embed all the functionality of CSVJSON in any web application with <a href="https://flatfile.io/?utm_source=CSVJSON-Sponsorship&utm_medium=Text-Link&utm_campaign=CSVJSON-Sponsorship-Q4-2019-Text-Link-About&utm_term=Text-Link&utm_content=About-Flatfile">Flatfile</a>, and more. Auto-match columns, validate data fields, and provide an intuitive CSV import experience.
+			</p>
+
+			<h4>About CSV</h4>
+			<ul>
+				<li>
+					CSV stands for <a href="http://en.wikipedia.org/wiki/Comma-separated_values" target="_blank">Comma Separated Values</a>.
+					Often used as an interchange data format to represent table records, one per line. CSV is plain text.
+				</li>
+				<li>
+					The CSV format is documented in an RFC memo <a href="https://tools.ietf.org/html/rfc4180" target="_blank">RFC-4180</a>. 
+				</li>
+				<li>
+					The first line is often the header, or column names. Each subsequent row is a record and should have the same number of fields.
+				</li>
+				<li>
+					Fields containing the separator character, line breaks and double-quotes must be enclosed inside double quotes <code>"</code>.
+				</li>
+				<li>
+					Other separator are often used like tabs <code>\t</code>or semi-colons <code>;</code>.
+					TSV or Tab Separated Values is used to store table data in Clipboards.
+					When data is copied from Excel for example, it is stored as TSV in the Clipboard.
+				</li>
+				<li>
+					With CSVJSON you can parse values as numbers or JSON. Turn on respective <strong>Parse Numbers</strong> and <strong>Parse JSON</strong> switches to convert valid numbers and JSON (null, false, true, [] and {}).
+				</li>
+				<li>
+					With CSVJSON you can transpose the csv before conversion. Rows become columns, and columns become rows.
+				</li>
+				<li>
+					With CSVJSON you can output a hash (or object) instead of an array. In that case, the hash key will be the first column.
+				</li>
+			</ul>
+			<h4>Change Log</h4>
+			<ul>
+				<li><strong>Mar 20, 2019</strong> Bug fix: Detect duplicate column headers and make them unique. <a href="https://github.com/martindrapeau/csvjson-app/issues/71">GitHub issue #71</a>.</li>
+				<li><strong>Feb 2, 2019</strong> Refactored and published <a href="https://www.npmjs.com/package/csvjson-csv2json" target="_blank">npm package csv2json</a>. Fix for <a href="https://github.com/martindrapeau/csvjson-app/issues/70">GitHub issue #70</a>.</li>
+				<li><strong>Jan 26, 2019</strong> Improvement: Removed 64k limit on download button. Also fixed issue #68 'Cannot work functional with special letters'.</li>
+				<li><strong>Mar 31, 2018</strong> Improvement: Added option to parse JSON values.</li>
+				<li><strong>Dec 18, 2017</strong> Improvement: Added option to minify or compact JSON. <a href="https://github.com/martindrapeau/csvjson-app/issues/21">GitHub issue #21</a></li>
+				<li><strong>Oct 7, 2016</strong> Improvement: Added option to parse number values or not to retain original number formatting. <a href="https://github.com/martindrapeau/csvjson-app/issues/13">GitHub issue #13</a></li>
+				<li><strong>Jul 09, 2016</strong> Fixed bug : If no text is present in a csv field, it was assigned 0 (zero) by default.</li>
+				<li><strong>Jun 20, 2016</strong> Bug fix: strings containing quotes and commas were prematurely cut.</li>
+				<li><strong>Dec 30, 2015</strong> Bug fix: drop quotes on keys of nested objects.</li>
+				<li><strong>Nov 26, 2015</strong> Improvement: Added options to transpose and output object instead of array.</li>
+				<li><strong>Jan 30, 2014</strong> Bug fix: Pasting Excel data into Textarea would cause an upload.</li>
+				<li><strong>Jan 12, 2014</strong> Initial release.</li>
+			</ul>
+			<h4>Feedback</h4>
+<p>
+	<a href="https://github.com/martindrapeau/csvjson-app">Code available on GitHub.</a>
+	Report bugs or ask for improvements through
+	<a href="https://github.com/martindrapeau/csvjson-app/issues">GitHub issues</a>.
+</p>
+		</div>
+		<div class="col-md-4">
+					</div>
+	</div>
+</div>
+
+		<footer class="navbar">
+			<div class="container-fluid">
+				<p>
+					&copy; 2014-2019 <a href="https://medium.com/@martindrapeau">Martin Drapeau</a> &nbsp;
+					<a href="https://github.com/martindrapeau/csvjson-app/issues">Report an issue</a> &nbsp;
+					<a href="https://github.com/martindrapeau/csvjson-app">Code available on GitHub</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>
